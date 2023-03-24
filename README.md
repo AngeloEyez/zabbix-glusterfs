@@ -1,6 +1,10 @@
 # Gluster Storage - Zabbix
 ![Zabbix Glusterfs](https://i.imgur.com/K7OP7uM.png)
 
+**2023/3/24**
+Forked from [MrCirca](https://github.com/MrCirca/zabbix-glusterfs)'s work and modify for Zabbix 6.4 and current gstatus.
+
+---
 
 This project was created to monitor Gluster Storage with Zabbix.
 In this repository there are two files.
