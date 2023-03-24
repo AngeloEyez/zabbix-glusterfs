@@ -49,17 +49,10 @@ zabbix_export:
           delay: 2m
           trends: '0'
           value_type: TEXT
-        -
-          uuid: d8866bb6eabe481fa3950d823b1ac600
-          name: 'Gluster Storage status'
-          key: 'gluster_storage_info["health"]'
-          delay: 2m
-          trends: '0'
-          value_type: TEXT
           triggers:
             -
               uuid: 4f69b2ff16d74480a0e64f17685548d8
-              expression: 'find(/Gluster Storage/gluster_storage_info["health"],,"like","Healthy")=0'
+              expression: 'find(/Gluster Storage/gluster_storage_info["cluster_status"],,"like","Healthy")=0'
               name: 'Gluster cluster status is Unhealthy'
               priority: HIGH
         -
@@ -77,17 +70,20 @@ zabbix_export:
           name: 'Gluster Storage raw capacity'
           key: 'gluster_storage_info["raw_capacity"]'
           delay: 2m
+          status: DISABLED
           units: b
         -
           uuid: 16ba42bdd717458db085ef6886d9896d
           name: 'Gluster Storage Self Heal Active'
           key: 'gluster_storage_info["sh_active"]'
           delay: 2m
+          status: DISABLED
         -
           uuid: bc48e1e25a0d4fbd9f209889f6d3e8e0
           name: 'Gluster Storage Self Heal Enabled'
           key: 'gluster_storage_info["sh_enabled"]'
           delay: 2m
+          status: DISABLED
         -
           uuid: 52ce7337ca834f64bf68a8a3adb2a3e6
           name: 'Gluster Storage Total Size'
