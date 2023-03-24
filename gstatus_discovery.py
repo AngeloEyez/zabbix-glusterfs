@@ -17,7 +17,7 @@ if nargs == 1:
     print(json.dumps({'data': gluster_volume_names}))
 
 elif nargs == 2:
-    if sys.argv[1] in ["size_total", "size_used", "snapshot_count"]:
+    if sys.argv[1] in ["size_total", "size_used", "snapshot_count","size_free"]:
        	s = 0
         for volume in volume_list:
             s += volume[sys.argv[1]]
