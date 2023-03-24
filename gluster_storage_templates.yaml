@@ -50,13 +50,6 @@ zabbix_export:
           trends: '0'
           value_type: TEXT
         -
-          uuid: 9de633ad99c641d78f583130f1c3963f
-          name: gtest
-          key: 'gluster_storage_info["gtest"]'
-          delay: 30s
-          trends: '0'
-          value_type: TEXT
-        -
           uuid: d8866bb6eabe481fa3950d823b1ac600
           name: 'Gluster Storage status'
           key: 'gluster_storage_info["health"]'
@@ -68,11 +61,6 @@ zabbix_export:
               uuid: 4f69b2ff16d74480a0e64f17685548d8
               expression: 'find(/Gluster Storage/gluster_storage_info["health"],,"like","Healthy")=0'
               name: 'Gluster cluster status is Unhealthy'
-              priority: HIGH
-            -
-              uuid: e9e837e820db46c9b1c89d9134dc6659
-              expression: 'find(/Gluster Storage/gluster_storage_info["health"],,"like","up")=0'
-              name: 'Gluster volume status is Unhealthy'
               priority: HIGH
         -
           uuid: 5cc82d58a4d64d0ead376619eb9c4b61
@@ -139,9 +127,14 @@ zabbix_export:
               params: '100*((last(//gluster_volume_info["size_total",{#VOLUME_NAME}])-last(//gluster_volume_info["size_used",{#VOLUME_NAME}]))/last(//gluster_volume_info["size_total",{#VOLUME_NAME}]))'
               trigger_prototypes:
                 -
+                  uuid: 8a9117c558d84744a85705c9f30cd362
+                  expression: 'last(/Gluster Storage/gluster_volume_free_space[{#VOLUME_NAME}],#1:now-5m)<10'
+                  name: 'Gluster Volume Free Space is less than 10%'
+                  priority: HIGH
+                -
                   uuid: c0794d96120145b588f93c668e9c6394
-                  expression: 'last(/Gluster Storage/gluster_volume_free_space[{#VOLUME_NAME}],#1:now-5m)<20'
-                  name: 'Gluster Volume Free Space is less than 20%'
+                  expression: 'last(/Gluster Storage/gluster_volume_free_space[{#VOLUME_NAME}],#1:now-5m)<15'
+                  name: 'Gluster Volume Free Space is less than 15%'
                   priority: WARNING
             -
               uuid: 7aa532b341d249e88a0281ae73eaf0e2
@@ -155,7 +148,7 @@ zabbix_export:
                   uuid: 5034c13c8d2b4fc49afafff7744b85d6
                   expression: 'find(/Gluster Storage/gluster_volume_info["health",{#VOLUME_NAME}],,"like","up")=0'
                   name: 'Gluster Volume state in {#VOLUME_NAME} is down'
-                  priority: WARNING
+                  priority: HIGH
             -
               uuid: a84833e5ec524cd7bc0c09b20b717bc5
               name: 'Gluster Volume Total Size on {#VOLUME_NAME}'
